@@ -12,13 +12,17 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5001;
 const MONGO_URL = process.env.MONGO_URL;
+mongoose.set("strictQuery", false);
 
 mongoose
   .connect(MONGO_URL)
   .then(() => {
     console.log("DB connected succefully");
   })
-  .catch((e) => console.log(e));
+  .catch((e) => {
+    console.log(e);
+    process.exit(1);
+  });
 
 //moddlewares & routes
 app.use(express.json());
