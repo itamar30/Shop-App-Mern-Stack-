@@ -138,4 +138,23 @@ router.get("/findProductsById/:id", async (req, res) => {
   res.status(200).json(income);
 });
 
+router.get("/ordersByMonth", async (req, res) => {
+  let income = await Order.aggregate([
+    {
+      $project: {
+        _id: 0,
+        month: { $month: "$createdAt" },
+        total: "$total",
+      },
+    },
+    {
+      $group: {
+        _id: "$month",
+        total: { $sum: "$total" },
+      },
+    },
+  ]);
+  res.status(200).json(income);
+});
+
 module.exports = router;

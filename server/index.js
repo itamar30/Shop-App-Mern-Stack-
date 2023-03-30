@@ -10,7 +10,7 @@ const stripeRoute = require("./routes/stripe");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 mongoose.set("strictQuery", false);
 
