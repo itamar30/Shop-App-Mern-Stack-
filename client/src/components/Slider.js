@@ -5,11 +5,13 @@ import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { sliderItems } from "../data";
 import { mobile } from "../responsive";
+import { Link } from "react-scroll";
 
 const Cotainaer = styled.div`
   width: 100%;
   height: 100vh;
   position: relative;
+  background-color: #f5fafd;
 
   overflow: hidden;
   ${mobile({ display: "none" })}
@@ -80,7 +82,8 @@ const Button = styled.button`
   font-size: 20px;
   background-color: transparent;
   font-weight: bold;
-  ${mobile({ right: 0, left: 0, margin: "auto" })}
+  cursor: pointer;
+  ${mobile({ right: 0, left: 0, margin: "auto" })};
 `;
 
 const Arrow = styled.div`
@@ -133,7 +136,9 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
+              <Link to="jenas" smooth={true} duration={500}>
+                <Button>SHOW NOW</Button>
+              </Link>
             </InfoContainer>
           </Slide>
         ))}

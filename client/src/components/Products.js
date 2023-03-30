@@ -4,6 +4,7 @@ import { popularProducts } from "../data";
 import styled from "styled-components";
 import axios from "axios";
 import { useLocation } from "react-router";
+import { publicRequest } from "../requestMethods";
 
 const Cotainaer = styled.div`
   display: flex;
@@ -24,10 +25,8 @@ const Products = ({ cat, filters, sort }) => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const res = await axios.get(
-          cat
-            ? `https://shop-app-server-y65y.onrender.com/api/products?category=${cat}`
-            : "https://shop-app-server-y65y.onrender.com/api/products"
+        const res = await publicRequest.get(
+          cat ? `/products?category=${cat}` : "/products"
         );
 
         setProducts(res.data);
@@ -39,8 +38,6 @@ const Products = ({ cat, filters, sort }) => {
   }, [cat, productsFlag]);
 
   useEffect(() => {
-    console.log("filters");
-    console.log(filters);
     filters && filterItems(filters);
   }, [filters]);
 
@@ -57,19 +54,37 @@ const Products = ({ cat, filters, sort }) => {
   }, [sort]);
 
   const filterItems = (filt) => {
-    const found = products.filter(
-      (item) =>
-        (item.color.includes(filt.color) || filt.color === undefined) &&
-        (item.size.includes(filt.size) || filt.size === undefined)
-    );
-    setFilterdProdcuts(found);
+    if (filt.color !== "Color") {
+      const found = products.filter(
+        (item) =>
+          (item.color.includes(filt.color) || filt.color === undefined) &&
+          (item.size.includes(filt.size) || filt.size === undefined)
+      );
+      setFilterdProdcuts(found);
+    }
   };
 
   return (
     <Cotainaer>
-      {filterdProdcuts.map((item) => (
-        <Product key={item._id} img={item.img} id={item._id} />
-      ))}
+      {filters?.color !== "Color"
+        ? filterdProdcuts.map((item) => (
+            <Product
+              key={item._id}
+              img={item.img}
+              id={item._id}
+              title={item.title}
+              price={item.price}
+            />
+          ))
+        : products.map((item) => (
+            <Product
+              key={item._id}
+              img={item.img}
+              id={item._id}
+              title={item.title}
+              price={item.price}
+            />
+          ))}
     </Cotainaer>
   );
 };

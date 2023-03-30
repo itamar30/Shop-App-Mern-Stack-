@@ -5,26 +5,23 @@ import { login } from "../redux/apiCalls";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
-  background-size: cover;
+  background-color: #f5fafd;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  ${mobile({ alignItems: "flex-start", paddingTop: "90px" })}
 `;
 
 const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
-  background-color: white;
+  background-color: #fcf5f5;
   ${mobile({ width: "75%" })}
 `;
 
@@ -43,13 +40,14 @@ const Input = styled.input`
   min-width: 40%;
   margin: 10px 0;
   padding: 10px;
+  background-color: #fcf5f5;
 `;
 
 const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
+  background-color: purple;
   margin-right: 10px;
   color: white;
   cursor: pointer;
@@ -92,39 +90,43 @@ const Login = () => {
   const { isFetching, error } = useSelector((state) => state.user);
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-          />
-          <ButtonsContainer>
-            <Button onClick={handleClick} disabled={isFetching}>
-              LOGIN
-            </Button>
-            <Link to="/">
-              <Button>GO HOME</Button>
+    <>
+      <Navbar />
+
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form>
+            <Input
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            />
+            <ButtonsContainer>
+              <Button onClick={handleClick} disabled={isFetching}>
+                LOGIN
+              </Button>
+              <Link to="/">
+                <Button>GO HOME</Button>
+              </Link>
+            </ButtonsContainer>
+            {error && <Error>Something went wrong...</Error>}
+
+            <Link to="/register">
+              <UserLink>DO NOT YOU REMEMBER THE PASSWORD?</UserLink>
             </Link>
-          </ButtonsContainer>
-          {error && <Error>Something went wrong...</Error>}
 
-          <Link to="/register">
-            <UserLink>DO NOT YOU REMEMBER THE PASSWORD?</UserLink>
-          </Link>
-
-          <Link to="/register">
-            <UserLink>CREATE A NEW ACCOUNT</UserLink>
-          </Link>
-        </Form>
-      </Wrapper>
-    </Container>
+            <Link to="/register">
+              <UserLink>CREATE A NEW ACCOUNT</UserLink>
+            </Link>
+          </Form>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

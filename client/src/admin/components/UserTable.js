@@ -19,7 +19,7 @@ import UserListAdmin from "../pages/UserListAdmin";
 
 const useStyles = makeStyles({
   table: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#f5fafd",
   },
 });
 
@@ -46,7 +46,7 @@ export default function UserTable() {
   `;
 
   const MyButton = styled.div`
-    background-color: green;
+    background-color: purple;
     color: white;
     padding: 3px;
     width: 70px;
@@ -93,24 +93,20 @@ export default function UserTable() {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>id</TableCell>
             <TableCell>avatar</TableCell>
             <TableCell>username</TableCell>
-            <TableCell>email</TableCell>
+
             <TableCell>status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {usersState.map((row) => (
             <TableRow key={row._id}>
-              <TableCell component="th" scope="row">
-                {row._id}
-              </TableCell>
               <TableCell>
                 <Img src={row.img || require("../../assets/avatar.jpg")} />
               </TableCell>
               <TableCell>{row.username}</TableCell>
-              <TableCell>{row.email}</TableCell>
+
               <TableCell>
                 {row.isAdmin === true ? "Admin" : "Regular User"}
               </TableCell>

@@ -3,20 +3,20 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 
 const Container = styled.form`
-  height: 60vh;
+  height: 30vh;
   background-color: #fcf5f5;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${mobile({ height: "20vh" })}
 `;
-const Title = styled.h1`
-  font-size: 70px;
+const Title = styled.div`
   margin-bottom: 20px;
+  ${mobile({})}
 `;
 
 const Desc = styled.div`
-  font-size: 24px;
   font-weight: 300;
   margin-bottom: 20px;
   ${mobile({ textAlign: "center" })}
@@ -52,8 +52,7 @@ const Newsletter = () => {
       action="https://getform.io/f/6f324ce7-4791-4d44-88f5-8cbffe2742ea"
       method="POST"
     >
-      <Title>Newsletter</Title>
-      <Desc>Get timely updates from your favorite products.</Desc>
+      <Desc>Subscribe to get updates</Desc>
       <InputContainer>
         <Input placeholder="Your email" name="mail" type="email" />
         <Button>

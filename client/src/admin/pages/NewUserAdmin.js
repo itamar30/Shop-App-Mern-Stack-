@@ -4,6 +4,7 @@ import { mobile } from "../../responsive";
 import { useLocation } from "react-router";
 import { userRequest } from "../../requestMethods";
 import Swal from "sweetalert2";
+import Navbar from "../../components/Navbar";
 
 const Title = styled.h3`
   font-size: 40px;
@@ -11,10 +12,11 @@ const Title = styled.h3`
 `;
 
 const Container = styled.div`
-  margin: 30px;
   padding-bottom: 200px;
+  background-color: #f5fafd;
+  padding: 50px;
 
-  ${mobile({ paddingBottom: "50px" })}
+  ${mobile({ padding: "30px", paddingBottom: "300px" })}
 `;
 const InnerContainer = styled.div``;
 
@@ -97,70 +99,78 @@ const NewUserAdmin = () => {
   };
 
   return (
-    <Container>
-      <Title>New User</Title>
+    <>
+      <Navbar />
 
-      <Form>
-        <Left>
-          <LabelinputContainer>
-            <Label for="User Name">User Name</Label>
-            <Input
-              placeholder="User Name"
-              id="User Name"
-              name="User Name"
-            ></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
-            <Label for="Email">Email</Label>
-            <Input placeholder="Email" id="Email" name="Email"></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
-            <Label for="Phone">Phone</Label>
-            <Input placeholder="Phone" id="Phone" name="Phone"></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
+      <Container>
+        <Title>New User</Title>
+
+        <Form>
+          <Left>
             <LabelinputContainer>
-              <Label for="Gender">Gender</Label>
+              <Label for="User Name">User Name</Label>
+              <Input
+                placeholder="User Name"
+                id="User Name"
+                name="User Name"
+              ></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <Label for="Email">Email</Label>
+              <Input placeholder="Email" id="Email" name="Email"></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <Label for="Phone">Phone</Label>
+              <Input placeholder="Phone" id="Phone" name="Phone"></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <LabelinputContainer>
+                <Label for="Gender">Gender</Label>
 
-              <Select name="Gender" id="Gender">
-                <Option value="Gender">Gender</Option>
-                <Option value="Male">Male</Option>
-                <Option value="Female">Female</Option>
+                <Select name="Gender" id="Gender">
+                  <Option value="Gender">Gender</Option>
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
+                </Select>
+              </LabelinputContainer>
+            </LabelinputContainer>
+          </Left>
+          <MostCenter></MostCenter>
+          <Right>
+            <LabelinputContainer>
+              <Label for="Full Name">Full Name</Label>
+              <Input
+                placeholder="Full Name"
+                id="Full Name"
+                name="Full Name"
+              ></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <Label for="Password">Password</Label>
+              <Input
+                placeholder="Password"
+                id="Password"
+                name="Password"
+              ></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <Label for="Adress">Adress</Label>
+              <Input placeholder="Adress" id="Adress" name="Adress"></Input>
+            </LabelinputContainer>
+            <LabelinputContainer>
+              <Label for="Active">Active</Label>
+
+              <Select name="Active" id="Active">
+                <Option value="Yes">Yes</Option>
+                <Option value="No">No</Option>
               </Select>
             </LabelinputContainer>
-          </LabelinputContainer>
-        </Left>
-        <MostCenter></MostCenter>
-        <Right>
-          <LabelinputContainer>
-            <Label for="Full Name">Full Name</Label>
-            <Input
-              placeholder="Full Name"
-              id="Full Name"
-              name="Full Name"
-            ></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
-            <Label for="Password">Password</Label>
-            <Input placeholder="Password" id="Password" name="Password"></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
-            <Label for="Adress">Adress</Label>
-            <Input placeholder="Adress" id="Adress" name="Adress"></Input>
-          </LabelinputContainer>
-          <LabelinputContainer>
-            <Label for="Active">Active</Label>
-
-            <Select name="Active" id="Active">
-              <Option value="Yes">Yes</Option>
-              <Option value="No">No</Option>
-            </Select>
-          </LabelinputContainer>
-        </Right>
-        <Center></Center>
-      </Form>
-      <Button onClick={handleCreate}>Create</Button>
-    </Container>
+          </Right>
+          <Center></Center>
+        </Form>
+        <Button onClick={handleCreate}>Create</Button>
+      </Container>
+    </>
   );
 };
 

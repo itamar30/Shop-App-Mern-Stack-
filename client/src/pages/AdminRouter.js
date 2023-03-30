@@ -6,8 +6,7 @@ import NewUserAdmin from "../admin/pages/NewUserAdmin";
 import ProductsAdmin from "../admin/pages/ProductsAdmin";
 import ProductAdmin from "../admin/pages/ProductAdmin";
 import NewProductAdmin from "../admin/pages/NewProductAdmin";
-import Sidebar from "../admin/components/Sidebar";
-import Topbar from "../admin/components/Topbar";
+
 import styled from "styled-components";
 import {
   BrowserRouter as Router,
@@ -37,26 +36,15 @@ const Dashborad = styled.div`
 
 const AdminRouter = () => {
   return (
-    <Container>
-      <Topbar />
-      <InnerComtainer>
-        <Dashborad>
-          <Sidebar />
-        </Dashborad>
-        <OtherPages>
-          <Routes>
-            <Route exact path="/" element={<HomeAdmin />} />
-            <Route path="userListAdmin" element={<UserListAdmin />} />
-
-            <Route path="/userAdmin/:id" element={<UserAdmin />} />
-            <Route path="/newUserAdmin" element={<NewUserAdmin />} />
-            <Route path="/productsAdmin" element={<ProductsAdmin />} />
-            <Route path="/productAdmin/:id" element={<ProductAdmin />} />
-            <Route path="/newProductAdmin" element={<NewProductAdmin />} />
-          </Routes>
-        </OtherPages>
-      </InnerComtainer>
-    </Container>
+    <Routes>
+      <Route exact path="/" element={<HomeAdmin />} />
+      <Route path="userListAdmin" element={<UserListAdmin />} />
+      <Route path="/userAdmin/:id" element={<UserAdmin />} />
+      <Route path="/newUserAdmin" element={<NewUserAdmin />} />
+      <Route path="/productsAdmin" element={<ProductsAdmin />} />
+      <Route path="/productAdmin/:id" element={<ProductAdmin />} />
+      <Route path="/newProductAdmin" element={<NewProductAdmin />} />
+    </Routes>
   );
 };
 

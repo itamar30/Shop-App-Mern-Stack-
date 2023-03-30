@@ -14,11 +14,13 @@ const KEY =
   "pk_test_51MZWbfFpcWmVWIy1QLVJef7AofhJx2sPWPofUz2kNtis3Kc8HCDxUyx4PnTIU4oy3eZLzl2YRIONbAJBFDYZ1t7v00n8Jf730F";
 console.log("KEY ", KEY);
 
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: #f5fafd;
+`;
 
 const Wrapper = styled.div`
   padding: 20px;
-  ${mobile({ padding: "10px" })}
+  ${mobile({ padding: "10px", paddingTop: "40px" })}
 `;
 
 const Title = styled.h1`
@@ -41,7 +43,7 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
-  ${mobile({ left: 0, right: 0, margin: "auto" })}
+  ${mobile({ display: "none" })}
 `;
 
 const TopTexts = styled.div`

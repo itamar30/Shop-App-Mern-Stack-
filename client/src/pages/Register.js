@@ -7,26 +7,23 @@ import { publicRequest } from "../requestMethods";
 import { login } from "../redux/apiCalls";
 import { useSelector, useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center;
-  background-size: cover;
+  background-color: #f5fafd;
+
   display: flex;
   align-items: center;
   justify-content: center;
+  ${mobile({ alignItems: "flex-start", paddingTop: "40px" })}
 `;
 
 const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
-  background-color: white;
+  background-color: #fcf5f5;
   ${mobile({ width: "75%" })}
 `;
 
@@ -45,6 +42,7 @@ const Input = styled.input`
   min-width: 40%;
   margin: 20px 10px 0px 0px;
   padding: 10px;
+  background-color: #fcf5f5;
 `;
 
 const Agreement = styled.span`
@@ -56,7 +54,7 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
+  background-color: purple;
   color: white;
   cursor: pointer;
   margin-bottom: 10px;
@@ -93,41 +91,45 @@ const Register = () => {
     }
   };
   return (
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Input
-            placeholder="confirm password"
-            onChange={(e) => setPasswordConfirmed(e.target.value)}
-          />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal
-            data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button onClick={handleRegister}>CREATE</Button>
-        </Form>
-        <Link to="/">
-          <Button>GO HOME</Button>
-          {password !== passwordConfirmed && (
-            <Error>Passwords do not match</Error>
-          )}
-          {secondError && <Error>Fill the form again please</Error>}
-        </Link>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+
+      <Container>
+        <Wrapper>
+          <Title>CREATE AN ACCOUNT</Title>
+          <Form>
+            <Input
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Input
+              placeholder="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Input
+              placeholder="confirm password"
+              onChange={(e) => setPasswordConfirmed(e.target.value)}
+            />
+            <Agreement>
+              By creating an account, I consent to the processing of my personal
+              data in accordance with the <b>PRIVACY POLICY</b>
+            </Agreement>
+            <Button onClick={handleRegister}>CREATE</Button>
+          </Form>
+          <Link to="/">
+            <Button>GO HOME</Button>
+            {password !== passwordConfirmed && (
+              <Error>Passwords do not match</Error>
+            )}
+            {secondError && <Error>Fill the form again please</Error>}
+          </Link>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

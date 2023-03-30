@@ -4,6 +4,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Link, useLocation } from "react-router-dom";
+import { mobile } from "../responsive";
 
 const InfoContainer = styled.div`
   opacity: 0;
@@ -20,24 +21,25 @@ const InfoContainer = styled.div`
   align-items: center;
   transition: all 0.5s ease;
   cursor: pointer;
+  flex-direction: column;
 `;
 
 const Cotainaer = styled.div`
-  background-color: #e2f1f7;
   width: 350px;
   height: 350px;
   margin: 5px;
   display: flex;
-  align-items: center;
-  justify-items: center;
+  align-items: flex-start;
+
   position: relative;
   &:hover ${InfoContainer} {
     opacity: 1;
   }
+  border: 1px solid black;
+  justify-content: flex-start;
 `;
 
 const Circle = styled.div`
-  background-color: white;
   height: 250px;
   width: 250px;
   border-radius: 50%;
@@ -51,6 +53,8 @@ const Image = styled.img`
   flex: 1;
   height: 75%;
   z-index: 2;
+  position: relative;
+  ${mobile({})}
 `;
 
 const Icon = styled.div`
@@ -70,10 +74,21 @@ const Icon = styled.div`
   }
 `;
 
-const Product = ({ img, id }) => {
+const Title = styled.div``;
+const Price = styled.div`
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+const NewContainer = styled.div`
+  position: absolute;
+  top: 290px;
+  left: 40px;
+`;
+
+const Product = ({ img, id, title, price }) => {
   return (
     <Cotainaer>
-      <Circle />
       <Image src={img} />
       <InfoContainer>
         <Icon>
@@ -82,6 +97,10 @@ const Product = ({ img, id }) => {
           </Link>
         </Icon>
       </InfoContainer>
+      <NewContainer>
+        <Title>{title}</Title>
+        <Price>{price} $</Price>
+      </NewContainer>
     </Cotainaer>
   );
 };

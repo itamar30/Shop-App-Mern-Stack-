@@ -3,16 +3,26 @@ import { DataGrid, RowsProp, ColDef } from "@material-ui/data-grid";
 import styled from "styled-components";
 
 import UserTable from "../components/UserTable";
+import Navbar from "../../components/Navbar";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
-  margin: 40px 40px;
+  padding: 40px;
+  background-color: #f5fafd;
+  ${mobile({
+    padding: 0,
+  })}
 `;
 
 const UserListAdmin = () => {
   return (
-    <Container>
-      <UserTable />
-    </Container>
+    <>
+      <Navbar />
+
+      <Container>
+        <UserTable />
+      </Container>
+    </>
   );
 };
 

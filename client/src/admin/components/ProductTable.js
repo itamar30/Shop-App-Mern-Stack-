@@ -19,7 +19,7 @@ import Swal from "sweetalert2";
 
 const useStyles = makeStyles({
   table: {
-    backgroundColor: "#f3f3f3",
+    backgroundColor: "#f5fafd",
   },
 });
 
@@ -43,7 +43,7 @@ const Icon = styled.div`
 `;
 
 const MyButton = styled.div`
-  background-color: green;
+  background-color: purple;
   color: white;
   padding: 3px;
   width: 70px;
@@ -104,10 +104,8 @@ const ProductTable = () => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>id</TableCell>
             <TableCell>img</TableCell>
             <TableCell>name</TableCell>
-            <TableCell>stock</TableCell>
 
             <TableCell>price</TableCell>
           </TableRow>
@@ -115,14 +113,10 @@ const ProductTable = () => {
         <TableBody>
           {productState.map((row) => (
             <TableRow key={Math.random()}>
-              <TableCell component="th" scope="row">
-                {row?._id}
-              </TableCell>
               <TableCell>
                 <Img src={row?.img} />
               </TableCell>
               <TableCell>{row?.title}</TableCell>
-              <TableCell>{row?.inStock === true ? "yes" : "no"}</TableCell>
 
               <TableCell>{row?.price}</TableCell>
               <TableCell>

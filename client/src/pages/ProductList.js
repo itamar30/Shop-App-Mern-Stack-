@@ -8,7 +8,9 @@ import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: #f5fafd;
+`;
 
 const Title = styled.h1`
   margin: 20px;

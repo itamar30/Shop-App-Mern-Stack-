@@ -24,10 +24,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { UploadFile } from "@mui/icons-material";
+import Navbar from "../../components/Navbar";
 
 const Container = styled.div`
-  margin: 30px;
+  padding: 30px;
   padding-bottom: 200px;
+  background-color: #f5fafd;
 `;
 
 const UserContainer = styled.div`
@@ -384,134 +386,140 @@ const UserAdmin = () => {
   };
 
   return (
-    <Container>
-      <UserContainer>
-        <Title>Edit User</Title>
-        <Link to="/newUserAdmin" style={{ textDecoration: "none" }}>
-          <MyButton>Create</MyButton>
-        </Link>
-      </UserContainer>
-      <BoxesContainer>
-        <InnerBoxLeft>
-          <InnerLeftSideContainer>
-            <UserTop>
-              <UserIcon>
-                <Icon src={user?.img || require("../../assets/avatar.jpg")} />
-              </UserIcon>
-              <TitleAndDescContainer>
-                <UserTttle>{user?.username}</UserTttle>
-                <UseDesc>
-                  {user?.isAdmin === "true" ? "Admin" : "Regulaer User"}
-                </UseDesc>
-              </TitleAndDescContainer>
-            </UserTop>
-            <UserBottom>
-              <UserDescInner>Acount Details</UserDescInner>
-              <BottomRowsContainer>
-                <BottomRow>
-                  <BottomIcon>
-                    <PersonOutlineIcon />
-                  </BottomIcon>
-                  <BottomText>{user?.username}</BottomText>
-                </BottomRow>
-                <BottomRow>
-                  <BottomIcon>
-                    <KeyIcon />
-                  </BottomIcon>
-                  <BottomText>{user?._id}</BottomText>
-                </BottomRow>
-                <BottomRow>
-                  <BottomIcon>
-                    <LocalPoliceIcon />
-                  </BottomIcon>
-                  <BottomText>
-                    {user?.isAdmin === true ? "Admin" : "Regular User"}
-                  </BottomText>
-                </BottomRow>
-                <BottomRow>
-                  <BottomIcon>
-                    <MailOutlinedIcon />
-                  </BottomIcon>
-                  <BottomText>{user?.email}</BottomText>
-                </BottomRow>
-                <BottomRow>
-                  <BottomIcon>
-                    <CalendarTodayIcon />
-                  </BottomIcon>
-                  <BottomText>Created {format(user?.createdAt)}</BottomText>
-                </BottomRow>
-                <BottomRow>
-                  <BottomIcon>
-                    <CalendarTodayIcon />
-                  </BottomIcon>
-                  <BottomText>Updated {format(user?.updatedAt)}</BottomText>
-                </BottomRow>
-              </BottomRowsContainer>
-            </UserBottom>
-          </InnerLeftSideContainer>
-        </InnerBoxLeft>
-        <InnerBoxCenter></InnerBoxCenter>
-        <InnerBoxRight>
-          <Left>
-            <InnerLeft>
-              <LeftSideTitle>Edit</LeftSideTitle>
-              <Form>
-                <LabelInputContainer>
-                  <Label for="User Name">User Name</Label>
-                  <Input
-                    placeholder={user?.username}
-                    onChange={(e) => setusername(e.target.value)}
-                  ></Input>
-                </LabelInputContainer>
-                <LabelInputContainer>
-                  <Label for="User Mail">User Mail</Label>
-                  <Input
-                    placeholder={user?.email}
-                    onChange={(e) => setmail(e.target.value)}
-                  ></Input>
-                </LabelInputContainer>
-                <LabelInputContainer style={{ marginTop: "50px" }}>
-                  <Select
-                    name="Role"
-                    id="Role"
-                    onChange={(e) => setisAdmin(e.target.value)}
-                  >
-                    <Option value="Role">Role</Option>
-                    <Option value={true}>Admin</Option>
-                    <Option value={false}>Regular User</Option>
-                  </Select>
-                </LabelInputContainer>
-              </Form>
-            </InnerLeft>
-          </Left>
-          <Right>
-            <InnerRightLEftContainer>
-              <SomeDiv>
-                <ImgRight
-                  src={user?.img || require("../../assets/avatar.jpg")}
-                />
-                <IconDiv>
-                  <PublishIcon style={{ fontSize: "40px" }} />
-                </IconDiv>
-              </SomeDiv>
-              <SomeDiv>
-                <FileInput
-                  type="file"
-                  placeholder="User Image"
-                  id="User Image"
-                  name="User Image"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                    setFileName(e.target.files[0]?.name + new Date().getTime());
-                  }}
-                ></FileInput>
-              </SomeDiv>
-              <UpdateButton onClick={uploadFile}>Updtae</UpdateButton>
-            </InnerRightLEftContainer>
-          </Right>
-        </InnerBoxRight>
-      </BoxesContainer>
-    </Container>
+    <>
+      <Navbar />
+
+      <Container>
+        <UserContainer>
+          <Title>Edit User</Title>
+          <Link to="/newUserAdmin" style={{ textDecoration: "none" }}>
+            <MyButton>Create</MyButton>
+          </Link>
+        </UserContainer>
+        <BoxesContainer>
+          <InnerBoxLeft>
+            <InnerLeftSideContainer>
+              <UserTop>
+                <UserIcon>
+                  <Icon src={user?.img || require("../../assets/avatar.jpg")} />
+                </UserIcon>
+                <TitleAndDescContainer>
+                  <UserTttle>{user?.username}</UserTttle>
+                  <UseDesc>
+                    {user?.isAdmin === "true" ? "Admin" : "Regulaer User"}
+                  </UseDesc>
+                </TitleAndDescContainer>
+              </UserTop>
+              <UserBottom>
+                <UserDescInner>Acount Details</UserDescInner>
+                <BottomRowsContainer>
+                  <BottomRow>
+                    <BottomIcon>
+                      <PersonOutlineIcon />
+                    </BottomIcon>
+                    <BottomText>{user?.username}</BottomText>
+                  </BottomRow>
+                  <BottomRow>
+                    <BottomIcon>
+                      <KeyIcon />
+                    </BottomIcon>
+                    <BottomText>{user?._id}</BottomText>
+                  </BottomRow>
+                  <BottomRow>
+                    <BottomIcon>
+                      <LocalPoliceIcon />
+                    </BottomIcon>
+                    <BottomText>
+                      {user?.isAdmin === true ? "Admin" : "Regular User"}
+                    </BottomText>
+                  </BottomRow>
+                  <BottomRow>
+                    <BottomIcon>
+                      <MailOutlinedIcon />
+                    </BottomIcon>
+                    <BottomText>{user?.email}</BottomText>
+                  </BottomRow>
+                  <BottomRow>
+                    <BottomIcon>
+                      <CalendarTodayIcon />
+                    </BottomIcon>
+                    <BottomText>Created {format(user?.createdAt)}</BottomText>
+                  </BottomRow>
+                  <BottomRow>
+                    <BottomIcon>
+                      <CalendarTodayIcon />
+                    </BottomIcon>
+                    <BottomText>Updated {format(user?.updatedAt)}</BottomText>
+                  </BottomRow>
+                </BottomRowsContainer>
+              </UserBottom>
+            </InnerLeftSideContainer>
+          </InnerBoxLeft>
+          <InnerBoxCenter></InnerBoxCenter>
+          <InnerBoxRight>
+            <Left>
+              <InnerLeft>
+                <LeftSideTitle>Edit</LeftSideTitle>
+                <Form>
+                  <LabelInputContainer>
+                    <Label for="User Name">User Name</Label>
+                    <Input
+                      placeholder={user?.username}
+                      onChange={(e) => setusername(e.target.value)}
+                    ></Input>
+                  </LabelInputContainer>
+                  <LabelInputContainer>
+                    <Label for="User Mail">User Mail</Label>
+                    <Input
+                      placeholder={user?.email}
+                      onChange={(e) => setmail(e.target.value)}
+                    ></Input>
+                  </LabelInputContainer>
+                  <LabelInputContainer style={{ marginTop: "50px" }}>
+                    <Select
+                      name="Role"
+                      id="Role"
+                      onChange={(e) => setisAdmin(e.target.value)}
+                    >
+                      <Option value="Role">Role</Option>
+                      <Option value={true}>Admin</Option>
+                      <Option value={false}>Regular User</Option>
+                    </Select>
+                  </LabelInputContainer>
+                </Form>
+              </InnerLeft>
+            </Left>
+            <Right>
+              <InnerRightLEftContainer>
+                <SomeDiv>
+                  <ImgRight
+                    src={user?.img || require("../../assets/avatar.jpg")}
+                  />
+                  <IconDiv>
+                    <PublishIcon style={{ fontSize: "40px" }} />
+                  </IconDiv>
+                </SomeDiv>
+                <SomeDiv>
+                  <FileInput
+                    type="file"
+                    placeholder="User Image"
+                    id="User Image"
+                    name="User Image"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      setFileName(
+                        e.target.files[0]?.name + new Date().getTime()
+                      );
+                    }}
+                  ></FileInput>
+                </SomeDiv>
+                <UpdateButton onClick={uploadFile}>Update</UpdateButton>
+              </InnerRightLEftContainer>
+            </Right>
+          </InnerBoxRight>
+        </BoxesContainer>
+      </Container>
+    </>
   );
 };
 

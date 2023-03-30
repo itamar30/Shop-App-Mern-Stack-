@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { mobile, isMobile } from "../responsive";
 import Swal from "sweetalert2";
+import { publicRequest } from "../requestMethods";
 
 const Pay = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -36,29 +37,11 @@ const Pay = () => {
   useEffect(() => {
     const makePayment = async () => {
       try {
-        const res = await axios.post(
-          "https://shop-app-server-y65y.onrender.com/api/stripe/payment",
-          {
-            tokenId: stripeToken.id,
-            amount: total,
-          }
-        );
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
+        const res = await publicRequest.post("/stripe/payment", {
+          tokenId: stripeToken.id,
+          amount: total,
         });
 
-        Toast.fire({
-          icon: "success",
-          title: "Payment Succeded",
-        });
         navigate("/Success", {
           state: { ...res.data },
         });
@@ -71,7 +54,9 @@ const Pay = () => {
   return (
     <Container>
       <StripeCheckout
-        name={"Hello " + user?.username || "GUEST"}
+        name={
+          "Hello " + user?.username === undefined ? "GUEST" : user?.username
+        }
         email="itamar.berti8@gmail.com"
         description={`Your total is ${total} $`}
         amount={total * 100}
@@ -81,7 +66,7 @@ const Pay = () => {
         <Button
           style={{ marginTop: "20px", marginBottom: "3px" }}
           onClick={() => {
-            const pos = isMobile() ? "bottom" : "top-right";
+            const pos = isMobile() ? "top" : "top-right";
             Swal.fire({
               position: pos,
               icon: "info",

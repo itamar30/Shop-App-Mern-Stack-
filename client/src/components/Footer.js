@@ -7,6 +7,7 @@ import {
   Room,
   Twitter,
 } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
@@ -26,7 +27,7 @@ const Logo = styled.h1`
   ${mobile({ textAlign: "center" })}
 `;
 
-const Desc = styled.p`
+const Desc = styled.div`
   margin: 20px 0px;
   ${mobile({ textAlign: "center" })}
 `;
@@ -105,18 +106,22 @@ const Footer = () => {
           humour, or randomised words which don’t look even slightly believable.
         </Desc>
         <SocialContainer>
-          <SocialIcon color="3B5999">
-            <Facebook />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
-            <Instagram />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
-            <Twitter />
-          </SocialIcon>
-          <SocialIcon color="E60023">
-            <Pinterest />
-          </SocialIcon>
+          <Link
+            to="https://www.facebook.com/itamar.berti.1"
+            style={{ textDecoration: "none" }}
+          >
+            <SocialIcon color="3B5999">
+              <Facebook />
+            </SocialIcon>
+          </Link>
+          <Link
+            to="https://www.instagram.com/itamarberti/"
+            style={{ textDecoration: "none" }}
+          >
+            <SocialIcon color="E4405F">
+              <Instagram />
+            </SocialIcon>
+          </Link>
         </SocialContainer>
       </Left>
       <Center>

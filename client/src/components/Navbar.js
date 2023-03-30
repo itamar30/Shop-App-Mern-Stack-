@@ -1,19 +1,41 @@
 import { Badge, Menu } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../redux/userRedux";
 import { emptyCart } from "../redux/cartRedux";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Swal from "sweetalert2";
-
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { isMobile } from "../responsive";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import HomeIcon from "@mui/icons-material/Home";
+import MenuIcon from "@mui/icons-material/Menu";
+import AddIcon from "@mui/icons-material/Add";
+import { showNavbar } from "../redux/navbarRedux";
 const Container = styled.div`
   height: 60px;
-  ${mobile({ height: "50px", backgroundColor: "#fcf5f5" })}
+  background-color: #fcf5f5;
+  position: relative;
+  flex: 10;
+  ${mobile({ height: "70px", backgroundColor: "#fcf5f5" })};
+`;
+
+const MobileDiv = styled.div`
+  display: none;
+  ${mobile({
+    display: "flex",
+
+    position: "absolute",
+    left: 10,
+    top: 10,
+  })};
 `;
 
 const Wrapper = styled.div`
@@ -21,6 +43,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   ${mobile({ padding: "10px 0px" })}
 `;
 
@@ -87,7 +110,7 @@ const Right = styled.div`
     left: "0px",
     right: "0px",
     top: "3px",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-end",
     paddingTop: "14px",
     paddingRight: "15px",
   })}
@@ -98,10 +121,12 @@ const MenuItem = styled.div`
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "14px" })}
+  position: relative;
 `;
 
 const SomeDiv = styled.div`
   display: none;
+  font-size: 20px;
   ${mobile({
     display: "flex",
     alignItems: "center",
@@ -109,31 +134,76 @@ const SomeDiv = styled.div`
     padding: "6px",
     backgroundColor: "#fcf5f5",
     height: "60px",
-    fontSize: "28px",
+    fontSize: "20px",
     fontWeight: "bold",
   })}
+`;
+
+const Sidebar = styled.div`
+  flex: 1;
+  height: 100vh;
+  background-color: #fcf5f5;
+  z-index: 10;
+`;
+
+const MobileLogo = styled.span`
+  display: none;
+  ${mobile({
+    display: "flex",
+    fontSize: "20px",
+    left: 0,
+    right: 0,
+    margin: "auto",
+    fontWeight: "600",
+  })}
+`;
+
+const IconContainer = styled.div`
+  margin-left: 5px;
+  margin-top: 3px;
+  cursor: pointer;
+  ${mobile({
+    display: "none",
+  })}
+`;
+
+const HoverSpan = styled.span`
+  z-index: 10;
+  opacity: 0;
+  &:hover ${MenuItem} {
+    opacity: 1;
+  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 30px;
 `;
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
+  const navbar = useSelector((state) => state.navbar.isOn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isAdminPage = location.pathname.includes("Admin");
 
   const handleAdminButton = () => {
     navigate("/HomeAdmin");
   };
 
   const handleLogOut = () => {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Succesfully Log Out",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    user &&
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Succesfully Log Out",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     dispatch(logOut());
     dispatch(emptyCart());
+    !user && Swal.fire("You Are Already Logged Out", "", "question");
   };
 
   const handleRegisterClick = () => {
@@ -149,15 +219,22 @@ const Navbar = () => {
     <>
       <Container>
         <Wrapper>
-          <Left>
+          <Left onClick={() => dispatch(showNavbar())}>
+            {isAdminPage && !location.pathname.includes("Success") && (
+              <IconContainer>
+                <AddIcon
+                  style={{
+                    fontSize: "40px",
+                    color: "purple",
+                  }}
+                />
+              </IconContainer>
+            )}
             <Language>EN</Language>
             <SearchContainer>
               <Input placeholder="Search" />
               <Search style={{ color: "gray", fontSize: 16 }} />
             </SearchContainer>
-            <TopButton type="filled" onClick={handleAdminButton}>
-              GO TO DASHBORAD
-            </TopButton>
           </Left>
           <Center>
             {user ? (
@@ -167,16 +244,39 @@ const Navbar = () => {
             )}
           </Center>
           <Right>
-            <Link to="/register" onClick={handleRegisterClick}>
-              <MenuItem>REGISTER</MenuItem>
-            </Link>
-            <Link to="/login" onClick={handleRegisterClick}>
-              <MenuItem>LOG IN</MenuItem>
-            </Link>
+            {isAdminPage && (
+              <MobileDiv onClick={() => dispatch(showNavbar())}>
+                <AddIcon style={{ fontSize: "35px", color: "purple" }} />
+              </MobileDiv>
+            )}
+            {!isAdminPage && <MobileLogo>SHOPAPP</MobileLogo>}{" "}
             <Link to="/">
-              <MenuItem onClick={handleLogOut}>LOG OUT</MenuItem>
+              <MenuItem>
+                <HomeIcon />
+              </MenuItem>
             </Link>
-            <MenuItem></MenuItem>
+            {!user && (
+              <>
+                <MenuItem />
+
+                <Link to="/login" onClick={handleRegisterClick}>
+                  <LoginIcon />
+                </Link>
+              </>
+            )}
+            {user && (
+              <Link to="/">
+                <MenuItem onClick={handleLogOut}>
+                  <LogoutIcon />
+                </MenuItem>
+              </Link>
+            )}
+            {!user && <MenuItem />}{" "}
+            {!user && (
+              <Link to="/register" onClick={handleRegisterClick}>
+                <AccountCircleIcon />
+              </Link>
+            )}
             <Link to="/cart">
               <MenuItem>
                 <Badge
@@ -186,6 +286,11 @@ const Navbar = () => {
                 >
                   <ShoppingCartOutlined />
                 </Badge>
+              </MenuItem>
+            </Link>
+            <Link to="/HomeAdmin">
+              <MenuItem>
+                <DashboardIcon />
               </MenuItem>
             </Link>
           </Right>

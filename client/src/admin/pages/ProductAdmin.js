@@ -21,9 +21,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { UploadFile } from "@mui/icons-material";
+import Navbar from "../../components/Navbar";
 const Container = styled.div`
-  margin: 30px;
-  ${mobile({ paddingBottom: "150px" })}
+  padding: 30px;
+  padding-bottom: 200px;
+  background-color: #f5fafd;
+  ${mobile({ paddingBottom: "250px" })}
 `;
 
 const Title = styled.h3`
@@ -561,120 +564,124 @@ const ProductAdmin = () => {
   };
   console.log(data);
   return (
-    <Container>
-      <TopContainer>
-        <Title>Product</Title>
-        <Link to="/newProductAdmin" style={{ textDecoration: "none" }}>
-          <CreateButton>Create</CreateButton>
-        </Link>
-      </TopContainer>
-      <InnerContainer>
-        <Left>
-          <SmallStitle style={{ marginBottom: "15px" }}>Sales</SmallStitle>
+    <>
+      <Navbar />
+      <Container>
+        <TopContainer>
+          <Title>Product</Title>
+          <Link to="/newProductAdmin" style={{ textDecoration: "none" }}>
+            <CreateButton>Create</CreateButton>
+          </Link>
+        </TopContainer>
+        <InnerContainer>
+          <Left>
+            <SmallStitle style={{ marginBottom: "15px" }}>Sales</SmallStitle>
 
-          <ProductChart data={data} dataName="name" dataSales="Sales" />
-        </Left>
-        <Center></Center>
-        <Right>
-          <InnerContainerTwo>
-            <InnerLeft>
-              <MobileDiv3>
-                <IconContainer>
-                  <Icon src={product?.img} />
-                </IconContainer>
-              </MobileDiv3>
-              <LeftRow>id :</LeftRow>
-              <LeftRow>Sales :</LeftRow>
-              <LeftRow>In Stock :</LeftRow>
-              <LeftRow>Color :</LeftRow>
-              <LeftRow>Size :</LeftRow>
-              <LeftRow>Category :</LeftRow>
+            <ProductChart data={data} dataName="name" dataSales="Sales" />
+          </Left>
+          <Center></Center>
+          <Right>
+            <InnerContainerTwo>
+              <InnerLeft>
+                <MobileDiv3>
+                  <IconContainer>
+                    <Icon src={product?.img} />
+                  </IconContainer>
+                </MobileDiv3>
+                <LeftRow>id :</LeftRow>
+                <LeftRow>Sales :</LeftRow>
+                <LeftRow>In Stock :</LeftRow>
+                <LeftRow>Color :</LeftRow>
+                <LeftRow>Size :</LeftRow>
+                <LeftRow>Category :</LeftRow>
 
-              <LeftRow
-                style={{
-                  marginTop:
-                    isMobile() && product?.category.length > 2 ? "32px" : "0px",
-                }}
-              >
-                Price :
-              </LeftRow>
-            </InnerLeft>
-            <InnerRight>
-              <MobileDiv3>
-                <SmallestTitle>{product?.title}</SmallestTitle>
-              </MobileDiv3>
-              <RightRow>{product?._id.slice(0, 10)}</RightRow>
-              <RightRow>{sales > 0 ? sales : 0}</RightRow>
-
-              <RightRow>{product?.inStock.toString()}</RightRow>
-              <RightRow
-                style={{
-                  display: "flex",
-                  marginTop: isMobile && "15px",
-                  marginBottom: isMobile && "13px",
-                }}
-              >
-                {product?.color.map((item) => (
-                  <ColorCircle key={item} back={item}></ColorCircle>
-                ))}
-              </RightRow>
-
-              <RightRow>
-                {product?.size.map((item) => (
-                  <span key={item}>{item} ,</span>
-                ))}
-              </RightRow>
-
-              <RightRow>
-                {product?.category.map((item) => (
-                  <span key={item}>{item} ,</span>
-                ))}
-              </RightRow>
-              <RightRow>{product?.price}</RightRow>
-            </InnerRight>
-          </InnerContainerTwo>
-        </Right>
-      </InnerContainer>
-      <BottomContainer>
-        <BothSides>
-          <LeftSide>
-            <Form>
-              <LabelinputContainer>
-                <Label for="Product Name">Product Name</Label>
-                <Input
+                <LeftRow
                   style={{
-                    height: isMobile ? "40px" : "20px",
+                    marginTop:
+                      isMobile() && product?.category.length > 2
+                        ? "32px"
+                        : "0px",
                   }}
-                  placeholder={product?.title}
-                  id="Product Name"
-                  name="Product Name"
-                  onChange={(e) => setTitle(e.target.value)}
-                ></Input>
-              </LabelinputContainer>
-              <LabelinputContainer>
-                <Label for="Product desc">Product Description</Label>
-                <Input
+                >
+                  Price :
+                </LeftRow>
+              </InnerLeft>
+              <InnerRight>
+                <MobileDiv3>
+                  <SmallestTitle>{product?.title}</SmallestTitle>
+                </MobileDiv3>
+                <RightRow>{product?._id.slice(0, 10)}</RightRow>
+                <RightRow>{sales > 0 ? sales : 0}</RightRow>
+
+                <RightRow>{product?.inStock.toString()}</RightRow>
+                <RightRow
                   style={{
-                    height: isMobile ? "120px" : "20px",
-                    textOverflow: isMobile ? "ellipsis" : " ",
-                    overflow: "hidden",
+                    display: "flex",
+                    marginTop: isMobile && "15px",
+                    marginBottom: isMobile && "13px",
                   }}
-                  placeholder={product?.desc}
-                  id="Product desc"
-                  name="Product desc"
-                  onChange={(e) => setDesc(e.target.value)}
-                ></Input>
-              </LabelinputContainer>
-              <LabelinputContainer>
-                <Label for="Product price">Product Price</Label>
-                <Input
-                  placeholder={product?.price}
-                  id="Product price"
-                  name="Product price"
-                  onChange={(e) => setPrice(e.target.value)}
-                ></Input>
-              </LabelinputContainer>
-              {/* <LabelinputContainer>
+                >
+                  {product?.color.map((item) => (
+                    <ColorCircle key={item} back={item}></ColorCircle>
+                  ))}
+                </RightRow>
+
+                <RightRow>
+                  {product?.size.map((item) => (
+                    <span key={item}>{item} ,</span>
+                  ))}
+                </RightRow>
+
+                <RightRow>
+                  {product?.category.map((item) => (
+                    <span key={item}>{item} ,</span>
+                  ))}
+                </RightRow>
+                <RightRow>{product?.price}</RightRow>
+              </InnerRight>
+            </InnerContainerTwo>
+          </Right>
+        </InnerContainer>
+        <BottomContainer>
+          <BothSides>
+            <LeftSide>
+              <Form>
+                <LabelinputContainer>
+                  <Label for="Product Name">Product Name</Label>
+                  <Input
+                    style={{
+                      height: isMobile ? "40px" : "20px",
+                    }}
+                    placeholder={product?.title}
+                    id="Product Name"
+                    name="Product Name"
+                    onChange={(e) => setTitle(e.target.value)}
+                  ></Input>
+                </LabelinputContainer>
+                <LabelinputContainer>
+                  <Label for="Product desc">Product Description</Label>
+                  <Input
+                    style={{
+                      height: isMobile ? "120px" : "20px",
+                      textOverflow: isMobile ? "ellipsis" : " ",
+                      overflow: "hidden",
+                    }}
+                    placeholder={product?.desc}
+                    id="Product desc"
+                    name="Product desc"
+                    onChange={(e) => setDesc(e.target.value)}
+                  ></Input>
+                </LabelinputContainer>
+                <LabelinputContainer>
+                  <Label for="Product price">Product Price</Label>
+                  <Input
+                    placeholder={product?.price}
+                    id="Product price"
+                    name="Product price"
+                    onChange={(e) => setPrice(e.target.value)}
+                  ></Input>
+                </LabelinputContainer>
+                {/* <LabelinputContainer>
                 <Label for="Active">is Active</Label>
 
                 <Select name="Active" id="Active">
@@ -683,244 +690,247 @@ const ProductAdmin = () => {
                   <Option value="No">No</Option>
                 </Select>
               </LabelinputContainer> */}
-              <LabelinputContainer>
-                <Label for="Stock">In Stock</Label>
+                <LabelinputContainer>
+                  <Label for="Stock">In Stock</Label>
 
-                <Select name="Stock" id="Stock">
-                  <Option value="Stock">In Stock</Option>
-                  <Option value="Yes">Yes</Option>
-                  <Option value="No">No</Option>
-                </Select>
-              </LabelinputContainer>
+                  <Select name="Stock" id="Stock">
+                    <Option value="Stock">In Stock</Option>
+                    <Option value="Yes">Yes</Option>
+                    <Option value="No">No</Option>
+                  </Select>
+                </LabelinputContainer>
 
-              <LabelinputContainer>
-                <Label>Size</Label>
+                <LabelinputContainer>
+                  <Label>Size</Label>
 
-                <CheckBox>
-                  <MobileDiv>
-                    <Input
-                      type="checkbox"
-                      id="S"
-                      name="S"
-                      onChange={(e) => {
-                        handleSizes(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label myType={true} for="S">
-                      S
-                    </Label>
-
-                    <Input
-                      type="checkbox"
-                      id="M"
-                      name="M"
-                      onChange={(e) => {
-                        handleSizes(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="M" myType={true}>
-                      M
-                    </Label>
-                  </MobileDiv>
-                  <MobileDiv>
-                    <Input
-                      type="checkbox"
-                      id="L"
-                      name="L"
-                      onChange={(e) => {
-                        handleSizes(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="L" myType={true}>
-                      L
-                    </Label>
-
-                    <Input
-                      type="checkbox"
-                      id="XL"
-                      name="XL"
-                      onChange={(e) => {
-                        handleSizes(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="XL" myType={true}>
-                      XL
-                    </Label>
-                  </MobileDiv>
-                </CheckBox>
-                <Label>Color</Label>
-
-                <CheckBox>
-                  <ColorContainer>
+                  <CheckBox>
                     <MobileDiv>
                       <Input
                         type="checkbox"
-                        id="Red"
-                        name="Red"
+                        id="S"
+                        name="S"
                         onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
+                          handleSizes(e.target.checked, e.target.name);
                         }}
                       />
-                      <Label
-                        for="Red"
-                        myType={true}
-                        style={{ marginRight: "25px" }}
-                      >
-                        Red
+                      <Label myType={true} for="S">
+                        S
                       </Label>
 
                       <Input
                         type="checkbox"
-                        id="Blue"
-                        name="Blue"
+                        id="M"
+                        name="M"
                         onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
+                          handleSizes(e.target.checked, e.target.name);
                         }}
                       />
-                      <Label for="Blue" myType={true}>
-                        Blue
-                      </Label>
-                    </MobileDiv>
-
-                    <MobileDiv>
-                      <Input
-                        type="checkbox"
-                        id="White"
-                        name="White"
-                        onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
-                        }}
-                      />
-                      <Label for="White" myType={true}>
-                        White
-                      </Label>
-
-                      <Input
-                        type="checkbox"
-                        id="Black"
-                        name="Black"
-                        onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
-                        }}
-                      />
-                      <Label for="Black" myType={true}>
-                        Black
-                      </Label>
-                    </MobileDiv>
-                  </ColorContainer>
-
-                  <ColorContainer>
-                    <MobileDiv>
-                      <Input
-                        type="checkbox"
-                        id="Green"
-                        name="Green"
-                        onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
-                        }}
-                      />
-                      <Label for="Green" myType={true}>
-                        Green
-                      </Label>
-
-                      <Input
-                        type="checkbox"
-                        id="Brown"
-                        name="Brown"
-                        onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
-                        }}
-                      />
-                      <Label for="Brown" myType={true}>
-                        Brown
+                      <Label for="M" myType={true}>
+                        M
                       </Label>
                     </MobileDiv>
                     <MobileDiv>
                       <Input
                         type="checkbox"
-                        id="Yellow"
-                        name="Yellow"
+                        id="L"
+                        name="L"
                         onChange={(e) => {
-                          handleColors(e.target.checked, e.target.name);
+                          handleSizes(e.target.checked, e.target.name);
                         }}
                       />
-                      <Label for="Yellow" myType={true}>
-                        Yellow
+                      <Label for="L" myType={true}>
+                        L
+                      </Label>
+
+                      <Input
+                        type="checkbox"
+                        id="XL"
+                        name="XL"
+                        onChange={(e) => {
+                          handleSizes(e.target.checked, e.target.name);
+                        }}
+                      />
+                      <Label for="XL" myType={true}>
+                        XL
                       </Label>
                     </MobileDiv>
-                  </ColorContainer>
-                </CheckBox>
-                <Label>Category</Label>
+                  </CheckBox>
+                  <Label>Color</Label>
 
-                <CheckBox>
-                  <MobileDiv>
-                    <Input
-                      type="checkbox"
-                      id="jeans"
-                      name="jeans"
-                      onChange={(e) => {
-                        handleCategories(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="jeans" myType={true}>
-                      jeans
-                    </Label>
+                  <CheckBox>
+                    <ColorContainer>
+                      <MobileDiv>
+                        <Input
+                          type="checkbox"
+                          id="Red"
+                          name="Red"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label
+                          for="Red"
+                          myType={true}
+                          style={{ marginRight: "25px" }}
+                        >
+                          Red
+                        </Label>
 
-                    <Input
-                      type="checkbox"
-                      id="coats"
-                      name="coats"
-                      onChange={(e) => {
-                        handleCategories(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="coats" myType={true}>
-                      coats
-                    </Label>
-                  </MobileDiv>
-                  <MobileDiv>
-                    <Input
-                      type="checkbox"
-                      id="shirts"
-                      name="shirts"
-                      onChange={(e) => {
-                        handleCategories(e.target.checked, e.target.name);
-                      }}
-                    />
-                    <Label for="shirts" myType={true}>
-                      shirts
-                    </Label>
-                  </MobileDiv>
-                </CheckBox>
-              </LabelinputContainer>
-            </Form>
-          </LeftSide>
-          <RightSide>
-            <InnerRightSideDiv>
-              <SomeDiv2>
-                <ImgRight src={product?.img} />
-                <IconDiv>
-                  <PublishIcon style={{ fontSize: "40px" }} />
-                </IconDiv>
-              </SomeDiv2>
-              <SomeDiv2>
-                <FileInput
-                  type="file"
-                  placeholder="Product Image"
-                  id="Product Image"
-                  name="Product Image"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                    setFileName(e.target.files[0]?.name + new Date().getTime());
-                  }}
-                ></FileInput>
-              </SomeDiv2>
-              <Button onClick={uploadFile}>Update</Button>
-            </InnerRightSideDiv>
-          </RightSide>
-        </BothSides>
-      </BottomContainer>
-    </Container>
+                        <Input
+                          type="checkbox"
+                          id="Blue"
+                          name="Blue"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="Blue" myType={true}>
+                          Blue
+                        </Label>
+                      </MobileDiv>
+
+                      <MobileDiv>
+                        <Input
+                          type="checkbox"
+                          id="White"
+                          name="White"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="White" myType={true}>
+                          White
+                        </Label>
+
+                        <Input
+                          type="checkbox"
+                          id="Black"
+                          name="Black"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="Black" myType={true}>
+                          Black
+                        </Label>
+                      </MobileDiv>
+                    </ColorContainer>
+
+                    <ColorContainer>
+                      <MobileDiv>
+                        <Input
+                          type="checkbox"
+                          id="Green"
+                          name="Green"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="Green" myType={true}>
+                          Green
+                        </Label>
+
+                        <Input
+                          type="checkbox"
+                          id="Brown"
+                          name="Brown"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="Brown" myType={true}>
+                          Brown
+                        </Label>
+                      </MobileDiv>
+                      <MobileDiv>
+                        <Input
+                          type="checkbox"
+                          id="Yellow"
+                          name="Yellow"
+                          onChange={(e) => {
+                            handleColors(e.target.checked, e.target.name);
+                          }}
+                        />
+                        <Label for="Yellow" myType={true}>
+                          Yellow
+                        </Label>
+                      </MobileDiv>
+                    </ColorContainer>
+                  </CheckBox>
+                  <Label>Category</Label>
+
+                  <CheckBox>
+                    <MobileDiv>
+                      <Input
+                        type="checkbox"
+                        id="jeans"
+                        name="jeans"
+                        onChange={(e) => {
+                          handleCategories(e.target.checked, e.target.name);
+                        }}
+                      />
+                      <Label for="jeans" myType={true}>
+                        jeans
+                      </Label>
+
+                      <Input
+                        type="checkbox"
+                        id="coats"
+                        name="coats"
+                        onChange={(e) => {
+                          handleCategories(e.target.checked, e.target.name);
+                        }}
+                      />
+                      <Label for="coats" myType={true}>
+                        coats
+                      </Label>
+                    </MobileDiv>
+                    <MobileDiv>
+                      <Input
+                        type="checkbox"
+                        id="shirts"
+                        name="shirts"
+                        onChange={(e) => {
+                          handleCategories(e.target.checked, e.target.name);
+                        }}
+                      />
+                      <Label for="shirts" myType={true}>
+                        shirts
+                      </Label>
+                    </MobileDiv>
+                  </CheckBox>
+                </LabelinputContainer>
+              </Form>
+            </LeftSide>
+            <RightSide>
+              <InnerRightSideDiv>
+                <SomeDiv2>
+                  <ImgRight src={product?.img} />
+                  <IconDiv>
+                    <PublishIcon style={{ fontSize: "40px" }} />
+                  </IconDiv>
+                </SomeDiv2>
+                <SomeDiv2>
+                  <FileInput
+                    type="file"
+                    placeholder="Product Image"
+                    id="Product Image"
+                    name="Product Image"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      setFileName(
+                        e.target.files[0]?.name + new Date().getTime()
+                      );
+                    }}
+                  ></FileInput>
+                </SomeDiv2>
+                <Button onClick={uploadFile}>Update</Button>
+              </InnerRightSideDiv>
+            </RightSide>
+          </BothSides>
+        </BottomContainer>
+      </Container>
+    </>
   );
 };
 

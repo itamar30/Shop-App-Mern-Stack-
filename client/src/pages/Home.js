@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 import Categories from "../components/Categories";
 import Navbar from "../components/Navbar";
@@ -9,9 +10,10 @@ import Footer from "../components/Footer";
 import AnounceMent from "../components/Announcement";
 import Success from "../components/Success";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { isMobile, mobile } from "../responsive";
 import { useNavigate } from "react-router";
-
+import { dontShowMsg, showMsg } from "../redux/mobileRedux";
+import { useSelector, useDispatch } from "react-redux";
 const TopButton = styled.button`
   font-size: medium;
   width: 200px;
@@ -40,10 +42,12 @@ const TopButton = styled.button`
 
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleAdminButton = () => {
     navigate("/HomeAdmin");
   };
+
   return (
     <div>
       <Navbar />
@@ -51,9 +55,7 @@ const Home = () => {
       <Slider />
       <Categories />
       {/* <Products /> */}
-      <TopButton type="filled" onClick={handleAdminButton}>
-        MANAGE YOUR STORE NOW !
-      </TopButton>
+
       <Newsletter />
       <Footer />
     </div>

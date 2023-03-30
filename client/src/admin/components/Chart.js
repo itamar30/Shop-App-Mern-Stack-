@@ -20,7 +20,7 @@ const Container = styled.div`
   box-shadow: 0px 0px 30px -8px black;
   border: 1px solid black;
 
-  background-color: whitesmoke;
+  background-color: #fcf5f5;
 
   margin: 85px;
   margin-top: 55px;
@@ -46,7 +46,7 @@ const Title = styled.h3`
 `;
 
 const Chart = ({ data, title, dataKey, grid }) => {
-  let chartWidth = isMobile() ? 320 : 1100;
+  let chartWidth = isMobile() ? 320 : 1250;
   let paddingLeft = isMobile() ? 10 : 40;
   useEffect(() => {}, [chartWidth, paddingLeft]);
   return (

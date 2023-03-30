@@ -7,20 +7,25 @@ import { useSelector, useDispatch } from "react-redux";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import { emptyCart } from "../redux/cartRedux";
 import { userRequest } from "../requestMethods";
+import Navbar from "./Navbar";
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+
+  overflow: hidden;
+  padding-bottom: 50px;
+  background-color: #f5fafd;
   display: flex;
-  justify-content: center;
   align-items: center;
-  overflow-y: hidden;
-  ${mobile({ overflow: "scroll" })}
+  justify-content: center;
+  ${mobile({ alignItems: "flex-start", paddingTop: "30px" })}
 `;
 
 const InnerContainer = styled.div`
-  background-color: white;
+  background-color: #f5fafd;
   height: 90%;
   width: 40%;
+
+  margin: 60px;
   ${mobile({ width: "85%" })}
 
   display: flex;
@@ -33,7 +38,7 @@ const InnerContainer = styled.div`
   ${mobile({
     margin: "0px",
     justifyContent: "flex-start",
-    height: "600px",
+    height: "550px",
     marginRight: "20px",
     marginLeft: "20px",
   })}
@@ -47,7 +52,7 @@ const Button = styled.button`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: large;
-  ${mobile({ width: "70%" })}
+  ${mobile({ width: "50%", fontSize: "15px", borderRadius: "15px" })}
 `;
 
 const Title = styled.div`
@@ -58,8 +63,8 @@ const Title = styled.div`
 const Form = styled.div`
   flex: 1;
   width: 100%;
-  background-color: white;
   margin-bottom: 20px;
+
   ${mobile({
     alignItems: "flex-start",
     flex: 0.5,
@@ -136,29 +141,33 @@ const Success = () => {
   const user = useSelector((state) => state.user.currentUser);
 
   return (
-    <Container>
-      <InnerContainer>
-        <Title>Your Receipt</Title>
+    <>
+      <Navbar />
 
-        <Form>
-          <FormLeft>
-            <InputFormRight>User</InputFormRight>
-            <InputFormRight> Amount Paid</InputFormRight>
-            <InputFormRight> Transacion Id</InputFormRight>
-          </FormLeft>
-          <FormRight>
-            {user ? (
-              <InputFormLeft>{user.username}</InputFormLeft>
-            ) : (
-              <InputFormLeft>guest</InputFormLeft>
-            )}
-            <InputFormLeft>{transactionDEtails.amount} $</InputFormLeft>
-            <InputFormLeft>{transactionDEtails.id}</InputFormLeft>
-          </FormRight>
-        </Form>
-        <Button onClick={handleClick}>GO BACK HOME</Button>
-      </InnerContainer>
-    </Container>
+      <Container>
+        <InnerContainer>
+          <Title>Your Receipt</Title>
+
+          <Form>
+            <FormLeft>
+              <InputFormRight>User</InputFormRight>
+              <InputFormRight> Amount Paid</InputFormRight>
+              <InputFormRight> Transacion Id</InputFormRight>
+            </FormLeft>
+            <FormRight>
+              {user ? (
+                <InputFormLeft>{user.username}</InputFormLeft>
+              ) : (
+                <InputFormLeft>guest</InputFormLeft>
+              )}
+              <InputFormLeft>{transactionDEtails.amount} $</InputFormLeft>
+              <InputFormLeft>{transactionDEtails.id}</InputFormLeft>
+            </FormRight>
+          </Form>
+          <Button onClick={handleClick}>GO BACK HOME</Button>
+        </InnerContainer>
+      </Container>
+    </>
   );
 };
 

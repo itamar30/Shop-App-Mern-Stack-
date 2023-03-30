@@ -13,7 +13,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
-const Container = styled.div``;
+const Container = styled.div`
+  background-color: #f5fafd;
+`;
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -23,13 +25,20 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
+  display: flex;
+  ${mobile({
+    width: "400",
+    backgroundColor: "#fcf5f5",
+    alignItems: "flexStart",
+    justifycontent: "flex-start",
+  })}
 `;
 
 const Image = styled.img`
   width: 100%;
   height: 90vh;
-  object-fit: cover;
-  ${mobile({ height: "40vh" })}
+  object-fit: contain;
+  ${mobile({ height: "30vh", objectFit: "contain" })}
 `;
 
 const InfoContainer = styled.div`
@@ -38,17 +47,17 @@ const InfoContainer = styled.div`
   ${mobile({ padding: "10px" })}
 `;
 
-const Title = styled.h1`
-  font-weight: 200;
+const Title = styled.div`
+  font-weight: 500;
+  font-size: 20px;
 `;
 
-const Desc = styled.p`
+const Desc = styled.div`
   margin: 20px 0px;
 `;
 
 const Price = styled.span`
-  font-weight: 100;
-  font-size: 40px;
+  font-weight: 600;
 `;
 
 const FilterContainer = styled.div`

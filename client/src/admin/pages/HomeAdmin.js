@@ -7,17 +7,22 @@ import Chart from "../components/Chart";
 import { isMobile, mobile } from "../../responsive";
 import { trasactionList, newUsers, data } from "../myData";
 import Sidebar from "../components/Sidebar";
-import { userRequest } from "../../requestMethods";
+import { publicRequest, userRequest } from "../../requestMethods";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 const Container = styled.div`
-  background-color: #f3f3f3;
+  background-color: #f5fafd;
+  padding-bottom: 200px;
+  padding-top: 30px;
+
   height: 150vh;
   ::-webkit-scrollbar {
     display: none;
   }
-  ${mobile({ paddingBottom: "550px" })}
+  ${mobile({ paddingBottom: "850px", paddingTop: "30px" })}
 `;
 
 const Box = styled.div`
@@ -40,7 +45,7 @@ const BoxContainer = styled.div`
   display: flex;
 
   justify-content: space-between;
-  margin: 0px 85px;
+
   ${mobile({
     flexDirection: "column",
     justifyContent: "center",
@@ -52,12 +57,16 @@ const BoxContainer = styled.div`
     right: 0,
     left: 0,
     margin: "auto",
-  })}
+  })};
 `;
 const InnerBoxContainer = styled.div`
   display: flex;
 
   align-items: center;
+`;
+
+const OuerBotXontainer = styled.div`
+  padding: 40px 0;
 `;
 
 const Title = styled.div`
@@ -101,6 +110,8 @@ const NewMeBersContainer = styled.div`
 `;
 
 const Small = styled.div`
+  background-color: #fcf5f5;
+
   flex: 3;
   box-shadow: 0px 0px 0px -8px black;
   -webkit-box-shadow: 0px 0px 25px -8px black;
@@ -112,6 +123,8 @@ const Small = styled.div`
 `;
 const Large = styled.div`
   flex: 4;
+  background-color: #fcf5f5;
+
   box-shadow: 0px 0px 0px -8px black;
   -webkit-box-shadow: 0px 0px 25px -8px black;
   border: 1px solid black;
@@ -325,7 +338,9 @@ const HomeAdmin = () => {
   const [userStats, setUserStats] = useState([]);
   const [income, setIncome] = useState([]);
   const [perc, setPerc] = useState(0);
-
+  const [usersByMonth, setUsersByMonth] = useState([]);
+  const [revenuByMonth, setRevenuByMonth] = useState([]);
+  const [countFlag, setCountFlag] = useState(0);
   const MONTHS = useMemo(
     () => [
       "Jan",
@@ -396,125 +411,118 @@ const HomeAdmin = () => {
       } catch {}
     };
 
+    const getUsersByMonth = async () => {
+      let data = [];
+
+      let res = await publicRequest.get("/users/userByMonths");
+      res = res.data;
+      for (let i = 0; i <= 11; i++) {
+        const found = res.find((item) => item?._id === i + 1);
+        if (found !== undefined) {
+          data.push({
+            name: MONTHS[i],
+            users: found?.total,
+          });
+        } else {
+          data.push({
+            name: MONTHS[i],
+            users: 0,
+          });
+        }
+      }
+
+      setUsersByMonth(data);
+    };
+
+    const getRevenueByMonth = async () => {
+      let data = [];
+      let res = await publicRequest.get("orders/ordersByMonth");
+      res = res.data;
+      for (let i = 0; i <= 11; i++) {
+        const found = res.find((item) => item?._id === i + 1);
+        if (found !== undefined) {
+          data.push({
+            name: MONTHS[i],
+            total: found?.total,
+          });
+        } else {
+          data.push({
+            name: MONTHS[i],
+            total: 0,
+          });
+        }
+      }
+
+      setRevenuByMonth(data);
+      setCountFlag((prev) => prev + 1);
+    };
+
     getUsers();
     getOrders();
-    getUserStats();
-    getIncome();
-  }, [MONTHS]);
+
+    getUsersByMonth();
+    getRevenueByMonth();
+  }, [MONTHS, countFlag]);
 
   return (
-    <Container>
-      <BoxContainer>
-        <Box>
-          <Title>Revenue</Title>
-          <InnerBoxContainer>
-            <Number>
-              ${" "}
-              {allOrders.reduce((accumulator, object) => {
-                return accumulator + parseInt(object.total);
-              }, 0)}
-            </Number>
-            <ArrowUpwardIcon style={{ color: "green" }} />
-          </InnerBoxContainer>
-          <Sentence>In Total </Sentence>
-        </Box>
-        <Box>
-          <Title>Transactions</Title>
-          <InnerBoxContainer>
-            <Number>
-              {allOrders.reduce((accumulator, object) => {
-                return accumulator + object.products.length;
-              }, 0)}
-            </Number>
-
-            <ArrowUpwardIcon style={{ color: "green" }} />
-          </InnerBoxContainer>
-          <Sentence>From the Begging </Sentence>
-        </Box>
-        <Box>
-          <Title>Items Sold</Title>
-          <InnerBoxContainer>
-            <Number>
-              {allOrders.reduce((acc, obj) => {
-                return (
-                  acc +
-                  obj.products.reduce((acc, obj) => {
-                    return acc + obj.quantity;
-                  }, 0)
-                );
-              }, 0)}
-            </Number>
-
-            <Icon tendency="up">
-              <ArrowUpwardIcon />
-            </Icon>
-          </InnerBoxContainer>
-          <Sentence>In Total </Sentence>
-        </Box>
-      </BoxContainer>
-      <Chart
-        data={userStats}
-        title="User Analitycs"
-        dataKey="Active users"
-        grid
-      />
-      <NewMeBersContainer>
-        {<MobileTitle>New Join Members</MobileTitle>}
-        <Small>
-          <NewMembersTtile>New Join Members</NewMembersTtile>
-          {users.map((item) => (
-            <UserContainer>
-              <UserIcon>
-                <Img src={item.img || require("../../assets/avatar.jpg")} />
-              </UserIcon>
-              <NametitleContainer>
-                <Name>{item.username}</Name>
-                <UserTitle>
-                  {item.isAdmin === "true" ? "Admin User" : "Regular User"}
-                </UserTitle>
-              </NametitleContainer>
-              <Link
-                style={{ textDecoration: "none" }}
-                to={`/userAdmin/${item?._id}`}
-              >
-                <IconContainer>
-                  <VisibilityIcon style={{ marginRight: "10px" }} />
-                  <UserTitle>display</UserTitle>
-                </IconContainer>
-              </Link>
-            </UserContainer>
-          ))}
-        </Small>
-        <Space></Space>
-        <MobileTitle>Latest Transactions</MobileTitle>
-        <Large>
-          <NewMembersTtile>Latest Transactions</NewMembersTtile>
-          <TransactionContainer>
-            <TransasctionRowTitle>Img</TransasctionRowTitle>
-            <TransasctionRowTitle>User</TransasctionRowTitle>
-            <TransasctionRowTitle>Amount</TransasctionRowTitle>
-            <TransasctionRowTitle>Producs</TransasctionRowTitle>
-            <TransasctionRowTitle>Status</TransasctionRowTitle>
-          </TransactionContainer>
-          {orders.map((order) => (
-            <TransactionContainer key={order?._id}>
-              <TransasctionRow>
-                <IconCustomer
-                  style={{ marginTop: "-10px" }}
-                  src={order?.userImg || require("../../assets/avatar.jpg")}
-                ></IconCustomer>
-              </TransasctionRow>
-              <TransasctionRow>{order?.usernname}</TransasctionRow>
-              <TransasctionRow>{order?.total} $</TransasctionRow>
-              <TransasctionRow>{order?.products.length}</TransasctionRow>
-              <TransasctionRow status={order?.status}>
-                {order?.status}
-              </TransasctionRow>
+    <>
+      <Navbar />
+      <Container>
+        <Chart data={usersByMonth} title="Users" dataKey="users" grid />
+        <Chart data={revenuByMonth} title="Revenue" dataKey="total" grid />
+        <NewMeBersContainer>
+          {<MobileTitle>New Users </MobileTitle>}
+          <Small>
+            <NewMembersTtile>New Users</NewMembersTtile>
+            {users.map((item) => (
+              <UserContainer key={item?._id}>
+                <UserIcon>
+                  <Img src={item.img || require("../../assets/avatar.jpg")} />
+                </UserIcon>
+                <NametitleContainer>
+                  <Name>{item.username}</Name>
+                  <UserTitle>
+                    {item.isAdmin === "true" ? "Admin User" : "Regular User"}
+                  </UserTitle>
+                </NametitleContainer>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={`/userAdmin/${item?._id}`}
+                >
+                  <VisibilityIcon
+                    style={{ marginTop: "20px", marginRight: "30px" }}
+                  />
+                </Link>
+              </UserContainer>
+            ))}
+          </Small>
+          <Space></Space>
+          <MobileTitle>Latest Transactions</MobileTitle>
+          <Large>
+            <NewMembersTtile>Latest Transactions</NewMembersTtile>
+            <TransactionContainer>
+              <TransasctionRowTitle>Img</TransasctionRowTitle>
+              <TransasctionRowTitle>User</TransasctionRowTitle>
+              <TransasctionRowTitle>Amount</TransasctionRowTitle>
+              <TransasctionRowTitle>Producs</TransasctionRowTitle>
             </TransactionContainer>
-          ))}
-        </Large>
-      </NewMeBersContainer>
-    </Container>
+            {orders.map((order) => (
+              <TransactionContainer key={order?._id}>
+                <TransasctionRow>
+                  <IconCustomer
+                    style={{ marginTop: "-10px" }}
+                    src={order?.userImg || require("../../assets/avatar.jpg")}
+                  ></IconCustomer>
+                </TransasctionRow>
+                <TransasctionRow>{order?.usernname}</TransasctionRow>
+                <TransasctionRow>{order?.total} $</TransasctionRow>
+                <TransasctionRow>{order?.products.length}</TransasctionRow>
+              </TransactionContainer>
+            ))}
+          </Large>
+        </NewMeBersContainer>
+      </Container>
+    </>
   );
 };
 
